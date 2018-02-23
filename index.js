@@ -40,7 +40,7 @@ function generateShoppingItemsString(shoppingList) {
 function renderShoppingList() {
   // render the shopping list in the DOM
   console.log('`renderShoppingList` ran');
-  const shoppingListItemsString = generateShoppingItemsString(STORE.name);
+  const shoppingListItemsString = generateShoppingItemsString(STORE.items);
 
   // insert that HTML into the DOM
   $('.js-shopping-list').html(shoppingListItemsString);
@@ -49,7 +49,7 @@ function renderShoppingList() {
 
 function addItemToShoppingList(itemName) {
   console.log(`Adding "${itemName}" to shopping list`);
-  STORE.name.push({name: itemName, checked: false});
+  STORE.items.push({name: itemName, checked: false});
 }
 
 function handleNewItemSubmit() {
@@ -65,7 +65,7 @@ function handleNewItemSubmit() {
 
 function toggleCheckedForListItem(itemIndex) {
   console.log("Toggling checked property for item at index " + itemIndex);
-  STORE.name[itemIndex].checked = !STORE.name[itemIndex].checked;
+  STORE.items[itemIndex].checked = !STORE.items[itemIndex].checked;
 }
 
 
@@ -96,7 +96,7 @@ function deleteListItem(itemIndex) {
   // of 1. this has the effect of removing the desired item, and shifting all of the
   // elements to the right of `itemIndex` (if any) over one place to the left, so we
   // don't have an empty space in our list.
-  STORE.name.splice(itemIndex, 1);
+  STORE.items.splice(itemIndex, 1);
 }
 
 
@@ -111,20 +111,22 @@ function handleDeleteItemClicked() {
     renderShoppingList();
   });
 }
-// function hideListItem(itemIndex){
-//     console.log(`Hiding item at ${itemIndex} from shopping list`);
-
-// }
+function hideListItem(hideCompleted){
+    //console.log(`Hiding checked item ${item.checked} from shopping list`);
+    STORE.hideCompleted = !STORE.hideCompleted
+    //
+}
 
 function handleHideCompletedClicked(){
-    // get info from dom
-    // $('.js-shopping-list').on('click', '#hide-completed-item', event => {
-    //     console.log('`handleHideCompletedClicked` ran');
-    //     const itemIndex = getItemIndexFromElement(event.currentTarget);
-
-    
-    //     renderShoppingList();
-    // });
+    //get info from dom
+    $('#hide-completed-item').on('change', event => {
+        console.log('`handleHideCompletedClicked` ran');
+        //const itemIndex = getItemIndexFromElement(event.currentTarget);
+        hideListItem();
+        //remove items from array
+        //render remove items that are checked
+        console.log(renderShoppingList(".shopping-item__checked>${STORE.items}"));
+    });
     //change store
     //render
 }
@@ -138,7 +140,7 @@ function handleShoppingList() {
   handleNewItemSubmit();
   handleItemCheckClicked();
   handleDeleteItemClicked();
-  //handleHideCompletedClicked();
+  handleHideCompletedClicked();
 }
 
 // when the page loads, call `handleShoppingList`
