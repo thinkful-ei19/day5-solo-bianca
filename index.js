@@ -121,11 +121,11 @@ function handleHideCompletedClicked(){
     //get info from dom
     $('#hide-completed-item').on('change', event => {
         console.log('`handleHideCompletedClicked` ran');
-        //const itemIndex = getItemIndexFromElement(event.currentTarget);
+        const itemIndex = getItemIndexFromElement(event.currentTarget);
         hideListItem();
         //remove items from array
         //render remove items that are checked
-        console.log(renderShoppingList(".shopping-item__checked>${STORE.items}"));
+        renderShoppingList(deleteListItem(itemIndex));
     });
     //change store
     //render
